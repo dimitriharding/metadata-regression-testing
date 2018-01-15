@@ -57,3 +57,16 @@ typings/
 # dotenv environment variables file
 .env
 
+#tests folder
+tests/
+
+#coverage
+coverage/
+
+#nyc
+nyc_output
+
+#vscode
+.vscode
+
+
