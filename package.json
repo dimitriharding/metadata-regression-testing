@@ -1,11 +1,12 @@
 {
   "name": "metadata-regression-testing",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "🔄Metadata Regression Testing Tool🔄",
   "main": "index.js",
   "scripts": {
     "test": "xo && nyc --reporter=html --reporter=text ava",
-    "coverage": "nyc report --reporter=text-lcov | coveralls"
+    "coverage": "nyc report --reporter=text-lcov | coveralls",
+    "semantic-release": "semantic-release"
   },
   "repository": {
     "type": "git",
@@ -40,6 +41,7 @@
     "coveralls": "^3.0.0",
     "nyc": "^11.4.1",
     "rmdir": "^1.2.0",
+    "semantic-release": "^12.2.2",
     "xo": "^0.18.2"
   }
 }

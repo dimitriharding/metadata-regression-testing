@@ -69,4 +69,5 @@ nyc_output
 #vscode
 .vscode
 
+.DS_Store
 
