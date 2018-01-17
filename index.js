@@ -59,7 +59,7 @@ const generateMetaFiles = (url, metaData) => {
     // Create new expected metadata json file if none exists
 	if (!fs.existsSync(expectedMetaPath)) {
 		log(infoMessage('UPDATING: Expected metadata JSON does NOT exist.'));
-		log(infoMessage('Creating Expected metadata JSON from Result: '.green + expectedMetaPath));
+		log(infoMessage('Creating Expected metadata JSON from Result: ' + expectedMetaPath));
 
 		try {
 			fs.copySync(actualMetaPath, expectedMetaPath);
