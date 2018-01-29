@@ -11,3 +11,7 @@ script:
 
 after_success:
    - npm run coverage
+   - npm run semantic-release
+branches:
+  except:
+    - /^v\d+\.\d+\.\d+$/

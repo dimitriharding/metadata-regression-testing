@@ -1,16 +1,17 @@
 {
   "name": "metadata-regression-testing",
-  "version": "0.1.1",
+  "version": "0.0.0-development",
   "description": "🔄Metadata Regression Testing Tool🔄",
   "main": "index.js",
   "scripts": {
     "test": "xo && nyc --reporter=html --reporter=text ava",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
-    "semantic-release": "semantic-release"
+    "semantic-release": "semantic-release",
+    "travis-deploy-once": "travis-deploy-once"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/dimitriharding/metadata-regression-testing.git"
+    "url": "https://github.com/dimitriharding/metadata-regression-testing.git"
   },
   "keywords": [
     "metadata",
@@ -41,7 +42,14 @@
     "coveralls": "^3.0.0",
     "nyc": "^11.4.1",
     "rmdir": "^1.2.0",
-    "semantic-release": "^12.2.2",
+    "semantic-release": "^12.4.1",
+    "semantic-release-tamia": "^2.0.1",
+    "travis-deploy-once": "^4.3.3",
     "xo": "^0.18.2"
+  },
+  "release": {
+    "analyzeCommits": "semantic-release-tamia/analyzeCommits",
+    "generateNotes": "semantic-release-tamia/generateNotes",
+    "verifyRelease": "semantic-release-tamia/verifyRelease"
   }
 }

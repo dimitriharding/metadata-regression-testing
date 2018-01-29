@@ -24,22 +24,28 @@ const { mrt } = require('metadata-regression-testing');
  * Use some async function
  */
 (async () => {
-  let isExpected;
+    let isExpected;
 
-  isExpected = await mrt('https://github.com');
-  console.log(isExpected);
-  //=> true
-  //   See ./tests/metadata-regression/expected/_homepage.js   
+    isExpected = await mrt('https://github.com');
+    console.log(isExpected);
+    //=> true
+    //   See ./tests/metadata-regression/expected/_homepage.json   
 
-   isExpected = await mrt('https://github.com');
-   console.log(isExpected);
-  //=> true
+    isExpected = await mrt('https://github.com');
+    console.log(isExpected);
+    //=> true
 
-  isExpected = await mrt('https://www.google.com');
-  console.log(isExpected);
-  //=> false 
-  //   See ./tests/metadata-regression/diffs/_homepage.js 
-  //   Check console for differences between google and github metadata (example only)
+    isExpected = await mrt('https://www.google.com');
+    console.log(isExpected);
+    //=> false 
+    //   See ./tests/metadata-regression/diffs/_homepage.json.txt
+    //   Check console for differences between google and github metadata (example only)
+
+    isExpected = await mrt('https://www.google.com','https://github.com');
+    console.log(isExpected);
+    //=> false 
+    //   See ./tests/metadata-regression/diffs/www.google.com_VS_github.com_homepage.json.txt
+    //   Check console for differences between google and github metadata (example only)
 })()
 ```
 
@@ -53,7 +59,7 @@ mrt('https://github.com')
  .then(isExpected => {
     console.log(isExpected);
     //=> true
-    //   See ./tests/metadata-regression/expected/_homepage.js 
+    //   See ./tests/metadata-regression/expected/_homepage.json
 });
 
 mrt('https://github.com')
@@ -66,7 +72,15 @@ mrt('https://www.google.com')
  .then(isExpected => {
     console.log(isExpected);
     //=> false
-    //   See ./tests/metadata-regression/diffs/_homepage.js 
+    //   See ./tests/metadata-regression/diffs/_homepage.json.txt
+    //   Check console for differences between google and github metadata (example only)
+});
+
+mrt('https://www.google.com', 'https://github.com')
+ .then(isExpected => {
+    console.log(isExpected);
+    //=> false
+    //    See ./tests/metadata-regression/diffs/www.google.com_VS_github.com_homepage.json.txt
     //   Check console for differences between google and github metadata (example only)
 });
 ```
@@ -79,11 +93,12 @@ project_folder
         |_actual/
         |   *.json
         |_diffs/
-        |   *.json
+        |   *.txt
         |_expected/
             *.json
 ```
-        
+
+
 
 ## Tests
 

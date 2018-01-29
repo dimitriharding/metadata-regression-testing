@@ -9,6 +9,8 @@ const colors = require('colors/safe');
 const bgRed = colors.bgRed;
 const sillyMessage = colors.rainbow;
 const infoMessage = colors.green;
+const DOMAIN_REG = /:\/\/(.[^/]+)/;
+const METADATA_PATH = 'tests/metadata-regression';
 
 const log = console.log;
 
@@ -18,45 +20,67 @@ const youHaveBeenBad = (msg, err) => {
 
 const createFilenameFromUrl = url => {
 	let filename = url.replace(/^.*\/\/[^/]+/, '').replace(/[^\w\s]/gi, '_');
-	if (filename === '' || filename === '_') {
+	if (filename === '') {
 		filename = '_homepage';
 	}
+
+	if (filename === '_') {
+		filename = '_homepage';
+	}
+
 	return filename;
+};
+
+const compareMetaData = (testMetadata, referenceMetadata, diffPath) => {
+	const diffResults = jsonDiffString(testMetadata, referenceMetadata);
+	const differences = diff(testMetadata, referenceMetadata);
+
+	if (differences === undefined && diffResults === '') {
+		log(sillyMessage(`Regression Testing was successful for: ${diffPath.replace('/diffs/', '/actual/')}`));
+		return true;
+	}
+
+	// Log difference
+	log(bgRed('\n ** Difference #1 Green = Expected | Red = Current **'));
+	log(diffResults);
+
+	log(bgRed('\n ** Difference #12 rhs = Expected | lhs = Current **'));
+	log(JSON.stringify(differences, null, ' '));
+
+	// Write difference to text file and remove ascii codes
+	fs.outputFileSync(`${diffPath}.txt`, diffResults.replace(/\[31m|\[39m|\[32m|/g, ''));
+
+	// Log path for results
+	log(`See: ${diffPath}`);
+
+	return false;
 };
 
 const getMetadatDiff = (expected, actual) => {
 	const expectedJSON = fs.readJsonSync(expected);
 	const actualJSON = fs.readJsonSync(actual);
 	const diffPath = expected.replace('/expected/', '/diffs/');
-	const diffResults = jsonDiffString(actualJSON, expectedJSON);
-	const differences = diff(actualJSON, expectedJSON);
-
-	if (differences === undefined && diffResults === '') {
-		log(sillyMessage(`\nRegression Testing was successful for: ${actual}`));
-		return true;
-	}
-	// Log difference
-	log(bgRed('\n ** Difference #1 Green = Expected | Red = Current **'));
-	log(diffResults);
-
-	log(bgRed('\n ** Difference #12 rhs = Expected | lhs = Current **'));
-	log(differences);
-
-    // Write difference to a file
-	fs.outputFileSync(diffPath, diffResults);
-	return false;
+	return compareMetaData(actualJSON, expectedJSON, diffPath);
 };
 
-const generateMetaFiles = (url, metaData) => {
-	const filename = createFilenameFromUrl(url);
-	const metadataPath = 'tests/metadata-regression';
-	const expectedMetaPath = `${metadataPath}/expected/${filename}.json`;
-	const actualMetaPath = `${metadataPath}/actual/${filename}.json`;
+const generateMetaFiles = fetchedMetadata => {
+	const [TEST_URL, REF_URL] = Object.keys(fetchedMetadata);
+	const filename = createFilenameFromUrl(TEST_URL);
+	// Check for ref
+	if (REF_URL !== undefined) {
+		const testDomain = TEST_URL.match(DOMAIN_REG)[1];
+		const refDomain = REF_URL.match(DOMAIN_REG)[1];
+		const diffPath = `${METADATA_PATH}/diffs/${testDomain}_VS_${refDomain}${filename}.json`;
 
-    // Create actual metadata file with data
-	fs.outputFileSync(actualMetaPath, JSON.stringify(metaData, null, '\t'));
+		return compareMetaData(fetchedMetadata[TEST_URL], fetchedMetadata[REF_URL], diffPath);
+	}
+	const expectedMetaPath = `${METADATA_PATH}/expected/${filename}.json`;
+	const actualMetaPath = `${METADATA_PATH}/actual/${filename}.json`;
 
-    // Create new expected metadata json file if none exists
+	// Create actual metadata file with data
+	fs.outputFileSync(actualMetaPath, JSON.stringify(fetchedMetadata[TEST_URL], null, '\t'));
+
+	// Create new expected metadata json file if none exists
 	if (!fs.existsSync(expectedMetaPath)) {
 		log(infoMessage('UPDATING: Expected metadata JSON does NOT exist.'));
 		log(infoMessage('Creating Expected metadata JSON from Result: ' + expectedMetaPath));
@@ -72,18 +96,37 @@ const generateMetaFiles = (url, metaData) => {
 	return getMetadatDiff(expectedMetaPath, actualMetaPath);
 };
 
+const fetchMetadata = urlToGetMetadataFrom => {
+	return new Promise((resolve, reject) => {
+		scrape(urlToGetMetadataFrom)
+			.then(metadata => resolve(metadata))
+			.catch(err => {
+				log(JSON.stringify(err, null, ' '));
+				reject(new Error('Unable to retrieve metadata - Please check URL 🤔', err));
+			});
+	});
+};
+
 /**
- * Scrapes a given URL for metadata and performs a regression test
- * @param {string} url - Web page endpoint to scrape metadata from
+ * Scrapes a given URL/s for metadata and performs a regression test
+ * @param {String} testUrl - Web page endpoint/s to scrape metadata from and test
+ * @param {String} [refUrl] - Web page endpoint to use as reference for the metadata
  * @return {boolean}
  */
-exports.mrt = url => {
-	return scrape(url)
-        .then(metadata => {
-	return generateMetaFiles(url, metadata);
-})
-        .catch(err => {
-	youHaveBeenBad('Unable to retrieve metadata - Please check URL 🧐', err);
-});
+exports.mrt = (...urls) => {
+	const urlPromises = urls.map(fetchMetadata);
+	const metaDataResults = [];
+
+	return Promise.all(urlPromises)
+		.then(results => {
+			results.forEach(metadata => {
+				metaDataResults.push(metadata);
+			});
+			const urlkeyAndMetadataValuePairs = urls.reduce((obj, k, i) => ({...obj, [k]: metaDataResults[i]}), {});
+			return generateMetaFiles(urlkeyAndMetadataValuePairs);
+		})
+		.catch(err => {
+			youHaveBeenBad(err);
+		});
 };
 
