@@ -1,4 +1,5 @@
-# 🔄 metadata-regression-testing 🔄
+![MRT - Metadata Regression Testing](https://raw.githubusercontent.com/dimitriharding/metadata-regression-testing/master/media/logo.png)
+
 > Simple Metadata Regression Testing Tool
 
 [![Build Status](https://travis-ci.org/dimitriharding/metadata-regression-testing.svg?branch=master)](https://travis-ci.org/dimitriharding/metadata-regression-testing)
@@ -123,4 +124,4 @@ There are two sets of `differences` that are logged to the console once there is
 - [] Support multiple domains (currently, the assumption is that only one domain will be tested per usage)
 
 ### First Run Quick Look
-![First Run](https://github.com/dimitriharding/metadata-regression-testing/blob/v0.1.0/media/first_run_mrt.png)
+![First Run Terminal Output](https://raw.githubusercontent.com/dimitriharding/metadata-regression-testing/master/media/first_run_mrt.png)
