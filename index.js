@@ -122,7 +122,7 @@ exports.mrt = (...urls) => {
 			results.forEach(metadata => {
 				metaDataResults.push(metadata);
 			});
-			const urlkeyAndMetadataValuePairs = urls.reduce((obj, k, i) => ({...obj, [k]: metaDataResults[i]}), {});
+			const urlkeyAndMetadataValuePairs = urls.reduce((obj, k, i) => Object.assign(obj, {[k]: metaDataResults[i]}), {});
 			return generateMetaFiles(urlkeyAndMetadataValuePairs);
 		})
 		.catch(err => {
