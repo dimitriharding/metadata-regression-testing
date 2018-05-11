@@ -1,7 +1,7 @@
 {
   "name": "metadata-regression-testing",
   "version": "0.0.0-development",
-  "description": "🔄Metadata Regression Testing Tool🔄",
+  "description": "🔄 Metadata Regression Testing Tool 🔄",
   "main": "index.js",
   "scripts": {
     "test": "xo && nyc --reporter=html --reporter=text ava",
@@ -35,17 +35,18 @@
     "deep-diff": "^0.3.8",
     "fs-extra": "^5.0.0",
     "html-metadata": "^1.6.3",
-    "json-diff": "^0.5.2"
+    "json-diff": "^0.5.2",
+    "meow": "^4.0.0"
   },
   "devDependencies": {
-    "ava": "^0.24.0",
+    "ava": "^0.25.0",
     "coveralls": "^3.0.0",
-    "nyc": "^11.4.1",
+    "nyc": "^11.7.3",
     "rmdir": "^1.2.0",
     "semantic-release": "^12.4.1",
     "semantic-release-tamia": "^2.0.1",
-    "travis-deploy-once": "^4.3.3",
-    "xo": "^0.18.2"
+    "travis-deploy-once": "^5.0.0",
+    "xo": "^0.21.0"
   },
   "release": {
     "analyzeCommits": "semantic-release-tamia/analyzeCommits",
