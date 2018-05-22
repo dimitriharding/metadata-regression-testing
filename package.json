@@ -36,7 +36,8 @@
     "fs-extra": "^5.0.0",
     "html-metadata": "^1.6.3",
     "json-diff": "^0.5.2",
-    "meow": "^4.0.0"
+    "meow": "^4.0.0",
+    "xa": "^1.0.6"
   },
   "devDependencies": {
     "ava": "^0.25.0",
