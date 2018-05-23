@@ -1,6 +1,6 @@
 ![MRT - Metadata Regression Testing](https://raw.githubusercontent.com/dimitriharding/metadata-regression-testing/master/media/logo.png)
 
-> Simple Metadata Regression Testing Tool
+> Simple HTML Metadata Regression Testing Tool
 
 [![Build Status](https://travis-ci.org/dimitriharding/metadata-regression-testing.svg?branch=master)](https://travis-ci.org/dimitriharding/metadata-regression-testing)
 [![Coverage Status](https://coveralls.io/repos/github/dimitriharding/metadata-regression-testing/badge.svg?branch=master)](https://coveralls.io/github/dimitriharding/metadata-regression-testing?branch=master)
@@ -20,6 +20,7 @@ $ npm install --save metadata-regression-testing
 
 ```js
 const { mrt } = require('metadata-regression-testing');
+const opts = {};
 
 /*
  * Use some async function
@@ -27,66 +28,87 @@ const { mrt } = require('metadata-regression-testing');
 (async () => {
     let isExpected;
 
-    isExpected = await mrt('https://github.com');
+    isExpected = await mrt(opts, 'https://github.com');
     console.log(isExpected);
     //=> true
     //   See ./tests/metadata-regression/expected/_homepage.json   
 
-    isExpected = await mrt('https://github.com');
+    isExpected = await mrt(opts, 'https://github.com');
     console.log(isExpected);
     //=> true
 
-    isExpected = await mrt('https://www.google.com');
+    isExpected = await mrt(opts, 'https://www.google.com');
     console.log(isExpected);
     //=> false 
-    //   See ./tests/metadata-regression/diffs/_homepage.json.txt
+    //   See ./tests/metadata-regression/diffs/_homepage.json
     //   Check console for differences between google and github metadata (example only)
 
-    isExpected = await mrt('https://www.google.com','https://github.com');
+    isExpected = await mrt(opts, 'https://www.google.com','https://github.com');
     console.log(isExpected);
     //=> false 
-    //   See ./tests/metadata-regression/diffs/www.google.com_VS_github.com_homepage.json.txt
+    //   See ./tests/metadata-regression/diffs/www.google.com_VS_github.com_homepage.json
     //   Check console for differences between google and github metadata (example only)
+
+    opts.path = 'tests/updated';
+    opts.keysOnly = true;
+    
+    isExpected = await mrt(opts, 'https://www.google.com','https://github.com');
+    console.log(isExpected);
+    //=> false 
+    //   See ./tests/updated/diffs/www.google.com_VS_github.com_homepage.json
+    //   Check console for differences between google and github metadata keys (example only)
 })()
 ```
 
 ```js
 const { mrt } = require('metadata-regression-testing');
+const opts = {};
 
 /*
  * Use .then method
  */
-mrt('https://github.com')
+mrt(opts, 'https://github.com')
  .then(isExpected => {
     console.log(isExpected);
     //=> true
     //   See ./tests/metadata-regression/expected/_homepage.json
 });
 
-mrt('https://github.com')
+mrt(opts, 'https://github.com')
  .then(isExpected => {
     console.log(isExpected);
     //=> true
 });
 
-mrt('https://www.google.com')
+mrt(opts, 'https://www.google.com')
  .then(isExpected => {
     console.log(isExpected);
     //=> false
-    //   See ./tests/metadata-regression/diffs/_homepage.json.txt
+    //   See ./tests/metadata-regression/diffs/_homepage.json
     //   Check console for differences between google and github metadata (example only)
 });
 
-mrt('https://www.google.com', 'https://github.com')
+mrt(opts, 'https://www.google.com', 'https://github.com')
  .then(isExpected => {
     console.log(isExpected);
     //=> false
-    //    See ./tests/metadata-regression/diffs/www.google.com_VS_github.com_homepage.json.txt
+    //    See ./tests/metadata-regression/diffs/www.google.com_VS_github.com_homepage.json
     //   Check console for differences between google and github metadata (example only)
+});
+
+opts.path = 'tests/updated';
+opts.keysOnly = true;
+
+mrt(opts, 'https://www.google.com', 'https://github.com')
+ .then(isExpected => {
+    console.log(isExpected);
+    //=> false
+    //    See ./tests/updated/diffs/www.google.com_VS_github.com_homepage.json
+    //   Check console for differences between google and github metadata keys (example only)
 });
 ```
 
-*Note*: Files are generated in the following folder structure. (default, no override yet)
+*Note*: Files are generated in the following folder structure vy default (override is possible).
 ```
 project_folder
 |_ tests/
@@ -94,12 +116,26 @@ project_folder
         |_actual/
         |   *.json
         |_diffs/
-        |   *.txt
+        |   *.json
         |_expected/
             *.json
 ```
 
+## API
+<a name="mrt"></a>
 
+## mrt(opts, testUrl, [refUrl]) ⇒ <code>Boolean</code>
+Scrapes given URL/s for HTML metadata and performs a regression test
+
+**Returns**: <code>Boolean</code> - whether or not a match was found
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| opts | <code>Object</code> |  | JSON object with desired options |
+| [opts.path] | <code>String</code> | <code>&#x27;tests/metadata-regression&#x27;</code> | If defined, data files will be stored at dir |
+| [opts.keysOnly] | <code>Boolean</code> | <code>false</code> | If set to true, values will not be asserted |
+| testUrl | <code>String</code> |  | Web page endpoint to scrape metadata from and test |
+| [refUrl] | <code>String</code> |  | Web page endpoint to use as reference for the metadata |
 
 ## Tests
 
@@ -113,15 +149,10 @@ It automatically creates an expected JSON on the first run of any URL. These JSO
 
 Review [html-metadata](https://github.com/wikimedia/html-metadata) to see what is being scrapped. 
 
-There are two sets of `differences` that are logged to the console once there is a mismatch. They are (another time I'll come up with better names): 
-* :sparkler: colorful - Learn more @ [json-diff](https://github.com/andreyvit/json-diff)
-* :page_facing_up: detailed  - Learn more @ [deep-diff](https://github.com/flitbit/diff)
-
 ## Good to Have
-- [] CLI feature
-- [] Option overrides (e.g. change default file paths)
-- [] Custom names 
-- [] Support multiple domains (currently, the assumption is that only one domain will be tested per usage)
+- [ ] CLI feature
+- [x] Option overrides (e.g. change default file paths)
+- [x] Support multiple domains
 
 ### First Run Quick Look
 ![First Run Terminal Output](https://raw.githubusercontent.com/dimitriharding/metadata-regression-testing/master/media/first_run_mrt.png)
