@@ -4,7 +4,7 @@
   "description": "🔄 Metadata Regression Testing Tool 🔄",
   "main": "index.js",
   "scripts": {
-    "test": "xo && nyc --reporter=html --reporter=text ava",
+    "test": "xo && nyc --reporter=html --reporter=text ava -s",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "semantic-release": "semantic-release",
     "travis-deploy-once": "travis-deploy-once"
@@ -31,8 +31,7 @@
   },
   "homepage": "https://github.com/dimitriharding/metadata-regression-testing#readme",
   "dependencies": {
-    "colors": "^1.1.2",
-    "deep-diff": "^0.3.8",
+    "chalk": "^2.4.1",
     "fs-extra": "^5.0.0",
     "html-metadata": "^1.6.3",
     "json-diff": "^0.5.2",
