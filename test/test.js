@@ -1,46 +1,21 @@
 import {test} from 'ava';
 
 const fs = require('fs-extra');
-const rmdir = require('rmdir');
-const {mrt} = require('.');
+const {mrt} = require('..');
 
-/*
- * PATHs
- */
-const base = `${__dirname}/tests/metadata-regression`;
-const updatedBase = `${__dirname}/tests/updated`;
-const expectedFilePath = `${base}/expected/_homepage.json`;
-const updatedExpectedFilePath = `${updatedBase}/expected/_homepage.json`;
-const actualFilePath = `${base}/actual/_homepage.json`;
-const updatedActualFilePath = `${updatedBase}/actual/_homepage.json`;
-const updatedDiffFilePath = `${updatedBase}/diffs/github.com_VS_www.google.com_homepage.json`;
-const diffFilePath = `${base}/diffs/_homepage.json`;
-const diffFilePathForDifferentDomains = `${base}/diffs/www.google.com_VS_github.com_homepage.json`;
+const {
+	expectedFilePath,
+	updatedExpectedFilePath,
+	actualFilePath,
+	updatedActualFilePath,
+	diffFilePath,
+	updatedDiffFilePath,
+	diffFilePathForDifferentDomains
+} = require('./helpers/paths');
 
-/*
- * URLs
- */
-const GITHUB_URL = 'https://github.com';
-const GITHUB_URL_WITH_SLASH = 'https://github.com/';
-const GOOGLE_URL = 'https://www.google.com';
-const GOOGLE_URL_WITH_SLASH = 'https://www.google.com/';
 const opt = {};
-
-/**
- * Remove files from tests folder
- */
-const removeTestData = () => {
-	const testFolders = [`${__dirname}/tests/metadata-regression`, `${__dirname}/tests/updated`];
-	testFolders.forEach(folder => {
-		if (fs.existsSync(folder)) {
-			rmdir(folder, err => {
-				if (err) {
-					console.log(err);
-				}
-			});
-		}
-	});
-};
+const {removeTestData} = require('./helpers/remove-test-data');
+const {GOOGLE_URL, GOOGLE_URL_WITH_SLASH, GITHUB_URL, GITHUB_URL_WITH_SLASH} = require('./helpers/urls');
 
 test('Should accept two urls and pass', async t => {
 	removeTestData();
