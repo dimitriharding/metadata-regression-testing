@@ -33,22 +33,6 @@ const opts = {};
     //=> true
     //   See ./tests/metadata-regression/expected/_homepage.json   
 
-    isExpected = await mrt(opts, 'https://github.com');
-    console.log(isExpected);
-    //=> true
-
-    isExpected = await mrt(opts, 'https://www.google.com');
-    console.log(isExpected);
-    //=> false 
-    //   See ./tests/metadata-regression/diffs/_homepage.json
-    //   Check console for differences between google and github metadata (example only)
-
-    isExpected = await mrt(opts, 'https://www.google.com','https://github.com');
-    console.log(isExpected);
-    //=> false 
-    //   See ./tests/metadata-regression/diffs/www.google.com_VS_github.com_homepage.json
-    //   Check console for differences between google and github metadata (example only)
-
     opts.path = 'tests/updated';
     opts.keysOnly = true;
     
@@ -72,28 +56,6 @@ mrt(opts, 'https://github.com')
     console.log(isExpected);
     //=> true
     //   See ./tests/metadata-regression/expected/_homepage.json
-});
-
-mrt(opts, 'https://github.com')
- .then(isExpected => {
-    console.log(isExpected);
-    //=> true
-});
-
-mrt(opts, 'https://www.google.com')
- .then(isExpected => {
-    console.log(isExpected);
-    //=> false
-    //   See ./tests/metadata-regression/diffs/_homepage.json
-    //   Check console for differences between google and github metadata (example only)
-});
-
-mrt(opts, 'https://www.google.com', 'https://github.com')
- .then(isExpected => {
-    console.log(isExpected);
-    //=> false
-    //    See ./tests/metadata-regression/diffs/www.google.com_VS_github.com_homepage.json
-    //   Check console for differences between google and github metadata (example only)
 });
 
 opts.path = 'tests/updated';
@@ -137,6 +99,29 @@ Scrapes given URL/s for HTML metadata and performs a regression test
 | testUrl | <code>String</code> |  | Web page endpoint to scrape metadata from and test |
 | [refUrl] | <code>String</code> |  | Web page endpoint to use as reference for the metadata |
 
+## CLI
+```console
+$   mrt --help
+
+    Usage
+        $ mrt <testUrl> [refUrl]
+
+        Options
+        --keys-only, -k   Only compare keys in metadata object
+        --diff-board, -b  Generates an HTML report to view results
+        --path, -p        Defines where the data/results should be stored
+
+
+        Examples
+        $ mrt https://mrtoverflow.com
+        
+        $ mrt https://mrtoverflow.com --keys-only
+        
+        $ mrt https://qa-mrtoverflow.com https://dev-mrtoverflow.com
+        
+        $ mrt https://qa-mrtoverflow.com https://dev-mrtoverflow.com --keys-only
+```
+
 ## Tests
 
 `npm test`
@@ -150,7 +135,7 @@ It automatically creates an expected JSON on the first run of any URL. These JSO
 Review [html-metadata](https://github.com/wikimedia/html-metadata) to see what is being scrapped. 
 
 ## Good to Have
-- [ ] CLI feature
+- [x] CLI feature
 - [x] Option overrides (e.g. change default file paths)
 - [x] Support multiple domains
 
