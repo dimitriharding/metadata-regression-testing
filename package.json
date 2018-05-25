@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "🔄 Metadata Regression Testing Tool 🔄",
   "main": "index.js",
+  "bin": {
+    "mrt": "./cli.js"
+  },
   "scripts": {
     "pretest": "xo --fix",
     "test": "xo && nyc --reporter=html --reporter=text ava -s",
