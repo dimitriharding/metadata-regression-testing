@@ -4,6 +4,7 @@
   "description": "🔄 Metadata Regression Testing Tool 🔄",
   "main": "index.js",
   "scripts": {
+    "pretest": "xo --fix",
     "test": "xo && nyc --reporter=html --reporter=text ava -s",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "semantic-release": "semantic-release",
@@ -41,12 +42,19 @@
   "devDependencies": {
     "ava": "^0.25.0",
     "coveralls": "^3.0.0",
+    "execa": "^0.10.0",
+    "node-static": "^0.7.10",
     "nyc": "^11.7.3",
     "rmdir": "^1.2.0",
     "semantic-release": "^12.4.1",
     "semantic-release-tamia": "^2.0.1",
     "travis-deploy-once": "^5.0.0",
     "xo": "^0.21.0"
+  },
+  "xo": {
+    "rules": {
+      "import/no-unassigned-import": 0
+    }
   },
   "release": {
     "analyzeCommits": "semantic-release-tamia/analyzeCommits",
