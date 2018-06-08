@@ -21,7 +21,7 @@ class Diffboard {
 		this._public = resolve(__dirname, 'public');
 	}
 
-		/**
+	/**
 		* Find all files inside a dir, recursively.
 		* @function getAllFiles
 		* @param  {String} dir Dir path string.
@@ -33,20 +33,20 @@ class Diffboard {
 			const name = join(_dir, file);
 			const isDirectory = statSync(name).isDirectory();
 			return isDirectory ?
-			[
-				...files,
-				...this.getAllFiles(name)
-			] :
-								extname(name) === '.json' && name.includes('/expected/') ?
-								[
-									...files,
-									name
-								] :
-										[...files];
+				[
+					...files,
+					...this.getAllFiles(name)
+				] :
+				extname(name) === '.json' && name.includes('/expected/') ?
+					[
+						...files,
+						name
+					] :
+					[...files];
 		}, []);
 	}
 
-		/**
+	/**
 	 * Creates expected JSON to use with the diffboard template
 	 * @param {String} testFolder
 	 */
@@ -72,13 +72,13 @@ class Diffboard {
 
 			arrOfObjects.push({
 				id: expectedFileName
-										.replace(this._absolutePath, '')
-										.replace('/expected/', ''),
+					.replace(this._absolutePath, '')
+					.replace('/expected/', ''),
 				expectedJson: require(expectedFileName),
 				actualJson: require(actualFileName),
 				diffText: diffPresent ?
-										readFileSync(resolve(diffFileName), 'utf8') :
-										null,
+					readFileSync(resolve(diffFileName), 'utf8') :
+					null,
 				statOfActualMTime: moment(statSync(actualFileName).mtime).format('YYYY-MM-DD HH:mm:ss')
 			});
 		}
@@ -111,7 +111,7 @@ class Diffboard {
 
 		const html = pug.renderFile(this._template, data);
 		fs.writeFile(resolve(this._out, `${this._fileName}.html`), html, err => {
-						/* istanbul ignore next */
+			/* istanbul ignore next */
 			if (err) {
 				console.log(err);
 				return;

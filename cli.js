@@ -3,7 +3,7 @@
 'use strict';
 const log = require('xa');
 const meow = require('meow');
-const {mrt} = require('.');
+const {mrt, diffboard} = require('.');
 
 const cli = meow(`
 	Usage
@@ -44,7 +44,7 @@ const cli = meow(`
 });
 
 const options = {};
-const {path, keysOnly} = cli.flags;
+const {path, keysOnly, diffBoard} = cli.flags;
 if (path) {
 	options.path = path;
 }
@@ -55,4 +55,8 @@ if (cli.input.length === 0) {
 	log.error('Please provide URL to test or use --help for usage.', {silent: true});
 }
 
-mrt(options, ...cli.input);
+mrt(options, ...cli.input).then(() => {
+	if (diffBoard) {
+		diffboard(options);
+	}
+});

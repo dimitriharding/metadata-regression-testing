@@ -71,6 +71,20 @@ test('Should be able to use flag: [--help]', t => {
 	});
 });
 
+test('Should be able to use flag: [--diff-board]', t => {
+	removeTestData();
+	return run([AWESOME_URL, '--diff-board']).then(({stdout}) => {
+		t.true(stdout.includes('Report created:'));
+	});
+});
+
+test('Should be able to use flag: [-b]', t => {
+	removeTestData();
+	return run([AWESOME_URL, '-b']).then(({stdout}) => {
+		t.true(stdout.includes('Report created:'));
+	});
+});
+
 test.after('cleanup', () => {
 	removeTestData();
 });
