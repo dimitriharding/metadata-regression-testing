@@ -71,3 +71,5 @@ nyc_output
 
 .DS_Store
 
+diffboard/data.json
+diffboard/*.html

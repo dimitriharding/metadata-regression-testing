@@ -6,3 +6,8 @@ coverage/
 
 #nyc
 nyc_output/ 
+
+#diffboard
+diffboard/gulpfile.js
+diffboard/bundle.config.js
+diffboard/src

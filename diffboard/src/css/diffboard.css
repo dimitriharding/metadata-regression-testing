@@ -1,0 +1,224 @@
+body {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+  background:linear-gradient(0deg,rgba(43,49,55,0.9),rgba(43,49,55,0.99)),url("./img/mrt-logo");
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+}
+main {
+  flex: 1 0 auto;
+}
+* {
+  margin: 0;
+  padding: 0;
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+:focus {
+  outline: none;
+}
+
+table {
+  table-layout: fixed;
+  width: 100%;
+}
+td {
+  width: 33%;
+  padding: 3px 10px;
+  border: 1px solid transparent;
+  vertical-align: top;
+  font: 1em monospace;
+  text-align: left;
+  overflow: auto;
+  white-space: pre;
+}
+del {
+  text-decoration: none;
+  color: #b30000;
+}
+del-background {
+  background: #fadad7;
+}
+
+ins {
+  color: #406619;
+  text-decoration: none;
+}
+
+ins-background {
+  background: #eaf2c2;
+}
+
+th {
+  text-align: center;
+}
+
+table.diff .test,
+table.diff .reference {
+  border-right-color: white;
+}
+
+table.no-diff .reference {
+  border-right-color: white;
+}
+
+
+.collapsible-header:focus {
+  outline: none;
+}
+
+.source {
+  position: absolute;
+  right: 1%;
+  top: 0.2em;
+}
+
+.about-board {
+  width: 50%;
+  text-align: center;
+  margin-left: 25%;
+}
+
+/* MRT Class Colors */
+.mrt-purple-deep {
+  background-color: #3f0e80;
+}
+
+.text-white-light {
+  color:rgba(255,255,255,0.6)
+}
+
+.mrt-dark {
+  background-color: #24292e;
+}
+
+.text-mrt-purple-deep {
+  color: #3f0e80;
+}
+
+.mrt-purple-lite {
+  background-color: #b92aa1;
+}
+
+.mrt-red {
+  background-color: #ba2635;
+}
+
+input[type='text']:focus {
+  border-bottom: 1px solid white !important;
+  -webkit-box-shadow: 0 1px 0 0 white !important;
+  box-shadow: 0 1px 0 0 white !important;
+}
+
+input[type="text"] {
+  color: #039be5
+}
+
+.input-field .prefix {
+     color: rgba(255,255,255,0.6)
+}
+
+.input-field .prefix.active {
+  color: white
+}
+
+.stats-and-search {
+  padding: 10px;
+}
+
+.prefix label {
+  color: rgba(255,255,255,0.6)
+}
+
+#stat-all.active {
+      color: #b92aa1;
+}
+
+#stat-match.active{
+      color: #00897b
+}
+
+#stat-discrepancy.active {
+      color:  #e53935
+}
+
+[id*='stat']:hover {
+  color: white;
+}
+
+.stats {
+  cursor: pointer;
+}
+
+.match {
+  border-left: 2px solid #00897b;
+}
+
+.discrepancy {
+  border-left: 2px solid #e53935;
+}
+
+._disabled {
+  color: #455a64 !important
+}
+
+.btn{
+  color: #039be5;
+  background-color: transparent;
+  width: 12%
+}
+
+.btn:hover {
+    background-color: transparent
+}
+
+.page-footer {
+  background-color: transparent;
+}
+
+[type="radio"]:checked+span:after, [type="radio"].with-gap:checked+span:before, [type="radio"].with-gap:checked+span:after {
+  border: 2px solid  #039be5;
+}
+
+p.about-board {
+    display: none;
+}
+
+p.about-board:hover {
+  display: '' !important;
+}
+
+[type="radio"]:checked+span:after, [type="radio"].with-gap:checked+span:after {
+  background-color: #039be5;
+}
+
+/* .stats-and-search.affix{
+  position:fixed;
+} */
+
+main .container {
+  margin: 0 auto;
+  max-width: 1280px;
+  width: 95%;
+}
+@media only screen and (min-width: 601px) {
+  main .container {
+    width: 95%;
+  }
+}
+@media only screen and (min-width: 993px) {
+  main .container {
+    width: 95%;
+  }
+}
+
+@-moz-document url-prefix() {
+  body {
+    height: 99%; /* Hide scroll bar in Firefox */
+  }
+}
