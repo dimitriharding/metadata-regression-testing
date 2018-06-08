@@ -141,3 +141,8 @@ Review [html-metadata](https://github.com/wikimedia/html-metadata) to see what i
 
 ### First Run Quick Look
 ![First Run Terminal Output](https://raw.githubusercontent.com/dimitriharding/metadata-regression-testing/master/media/first_run_mrt.png)
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fdimitriharding%2Fmetadata-regression-testing.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fdimitriharding%2Fmetadata-regression-testing?ref=badge_shield)
+
+
+## License
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fdimitriharding%2Fmetadata-regression-testing.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fdimitriharding%2Fmetadata-regression-testing?ref=badge_large)
