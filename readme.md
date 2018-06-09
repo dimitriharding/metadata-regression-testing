@@ -8,6 +8,7 @@
 [![Coverage Status](https://coveralls.io/repos/github/dimitriharding/metadata-regression-testing/badge.svg?branch=master)](https://coveralls.io/github/dimitriharding/metadata-regression-testing?branch=master)
 [![XO code style](https://img.shields.io/badge/code_style-XO-5ed9c7.svg)](https://github.com/sindresorhus/xo)
 [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fdimitriharding%2Fmetadata-regression-testing.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fdimitriharding%2Fmetadata-regression-testing?ref=badge_shield)
+[![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
 
 
 Useful for when you want to ensure that metadata remains the same for a certain page. 
