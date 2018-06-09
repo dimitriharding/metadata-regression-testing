@@ -52,7 +52,7 @@ test('Should accept two urls and fail', async t => {
 });
 
 test('First time: Should only generate expected and actual folders with JSON files and' +
-				' pass',
+		' pass',
 async t => {
 	removeTestData();
 	// Running module
@@ -90,7 +90,7 @@ test('Should create _homepage filename for domain with "/" at the end as well an
 });
 
 test('Should create diff if current/actual metadata does not match baseline/expected m' +
-				'etadata',
+		'etadata',
 async t => {
 	// Running module
 	await mrt(opt, GITHUB_URL);
@@ -111,7 +111,7 @@ test('Should throw error for invalid URL', async t => {
 	const INVALID_URL = 'https$$myurl.com';
 	const error = await t.throws(mrt(opt, INVALID_URL));
 	t.is(error.message, 'Error: Unable to retrieve metadata for https$$myurl.com => HTTPError: 504: inter' +
-						'nal_http_error');
+			'nal_http_error');
 });
 
 test('Should throw error for missing options object', async t => {
@@ -161,6 +161,21 @@ test('Should use keys only for asserting results', async t => {
 	t.true(diffFilePathExists);
 	// Result from mrt is true
 	t.false(result);
+});
+
+test('Should remove diff', async t => {
+	removeTestData();
+
+	await mrt({}, GITHUB_URL);
+	await mrt({}, GOOGLE_URL);
+	const diffPresentBefore = fs.existsSync(diffFilePath);
+
+	await mrt({}, GITHUB_URL);
+	const diffPresentAfter = fs.existsSync(diffFilePath);
+
+	t.plan(2);
+	t.true(diffPresentBefore);
+	t.false(diffPresentAfter);
 });
 
 test.after('cleanup', () => {

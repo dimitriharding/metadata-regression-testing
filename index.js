@@ -33,8 +33,11 @@ const createFilenameFromUrl = url => {
 
 const compareMetaData = (testMetadata, referenceMetadata, diffPath) => {
 	const diffResults = jsonDiffString(testMetadata, referenceMetadata, {}, options);
-
 	if (diffResults === '') {
+		// Remove existing diff
+		if (fs.existsSync(diffPath)) {
+			fs.removeSync(diffPath);
+		}
 		log.info('SUCCESS', `Regression Testing was successful for: ${log.link(diffPath.replace('/diffs/', '/actual/'))}`);
 		return true;
 	}
@@ -44,7 +47,7 @@ const compareMetaData = (testMetadata, referenceMetadata, diffPath) => {
 	console.info(diffResults);
 
 	// Remove ascii codes
-	fs.outputFileSync(`${diffPath}.txt`, diffResults.replace(/\[31m|\[39m|\[32m|/g, ''));
+	fs.outputFileSync(diffPath, diffResults.replace(/\[31m|\[39m|\[32m|/g, ''));
 
 	// Log path for results
 	log.off('DIFF PATH', `${log.link(diffPath)}`);
@@ -55,7 +58,9 @@ const compareMetaData = (testMetadata, referenceMetadata, diffPath) => {
 const getMetadatDiff = (expected, actual) => {
 	const expectedJSON = fs.readJsonSync(expected);
 	const actualJSON = fs.readJsonSync(actual);
-	const diffPath = expected.replace('/expected/', '/diffs/');
+	const diffPath = expected
+		.replace('/expected/', '/diffs/')
+		.concat('.txt');
 	return compareMetaData(actualJSON, expectedJSON, diffPath);
 };
 
