@@ -66,7 +66,8 @@
   },
   "xo": {
     "ignores": [
-      "diffboard/**/{src,public,bundle.config.js}/**"
+      "diffboard/**/{src,public,bundle.config.js}/**",
+      "examples/**"
     ],
     "rules": {
       "import/no-unassigned-import": 0
