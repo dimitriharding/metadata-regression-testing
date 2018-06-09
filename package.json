@@ -1,6 +1,6 @@
 {
   "name": "metadata-regression-testing",
-  "version": "1.0.0",
+  "version": "1.2.1",
   "description": "🔄 Metadata Regression Testing Tool 🔄",
   "main": "index.js",
   "bin": {

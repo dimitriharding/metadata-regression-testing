@@ -1,10 +1,13 @@
-![MRT - Metadata Regression Testing](https://raw.githubusercontent.com/dimitriharding/metadata-regression-testing/master/media/logo.png)
+<p align="center">
+  <img src="https://raw.githubusercontent.com/dimitriharding/metadata-regression-testing/master/media/logo.png" alt="MRT - Metadata Regression Testing" width="50%">
+</p>
 
-> Simple HTML Metadata Regression Testing Tool
+> Simple HTML Metadata Regression Testing Tool  [Usage](https://github.com/dimitriharding/metadata-regression-testing#usage) | [API](https://github.com/dimitriharding/metadata-regression-testing#api) | [CLI](https://github.com/dimitriharding/metadata-regression-testing#cli) | [Reporter](https://github.com/dimitriharding/metadata-regression-testing#reporter)
 
 [![Build Status](https://travis-ci.org/dimitriharding/metadata-regression-testing.svg?branch=master)](https://travis-ci.org/dimitriharding/metadata-regression-testing)
 [![Coverage Status](https://coveralls.io/repos/github/dimitriharding/metadata-regression-testing/badge.svg?branch=master)](https://coveralls.io/github/dimitriharding/metadata-regression-testing?branch=master)
 [![XO code style](https://img.shields.io/badge/code_style-XO-5ed9c7.svg)](https://github.com/sindresorhus/xo)
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fdimitriharding%2Fmetadata-regression-testing.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fdimitriharding%2Fmetadata-regression-testing?ref=badge_shield)
 
 
 Useful for when you want to ensure that metadata remains the same for a certain page. 
@@ -17,43 +20,12 @@ $ npm install --save metadata-regression-testing
 ```
 
 ## Usage
-
 ```js
 const { mrt } = require('metadata-regression-testing');
 const opts = {};
 
-/*
- * Use some async function
- */
-(async () => {
-    let isExpected;
-
-    isExpected = await mrt(opts, 'https://github.com');
-    console.log(isExpected);
-    //=> true
-    //   See ./tests/metadata-regression/expected/_homepage.json   
-
-    opts.path = 'tests/updated';
-    opts.keysOnly = true;
-    
-    isExpected = await mrt(opts, 'https://www.google.com','https://github.com');
-    console.log(isExpected);
-    //=> false 
-    //   See ./tests/updated/diffs/www.google.com_VS_github.com_homepage.json
-    //   Check console for differences between google and github metadata keys (example only)
-})()
-```
-
-```js
-const { mrt } = require('metadata-regression-testing');
-const opts = {};
-
-/*
- * Use .then method
- */
-mrt(opts, 'https://github.com')
- .then(isExpected => {
-    console.log(isExpected);
+mrt(opts, 'https://github.com').then(isExpected => {
+    console.log(isExpected)
     //=> true
     //   See ./tests/metadata-regression/expected/_homepage.json
 });
@@ -61,11 +33,10 @@ mrt(opts, 'https://github.com')
 opts.path = 'tests/updated';
 opts.keysOnly = true;
 
-mrt(opts, 'https://www.google.com', 'https://github.com')
- .then(isExpected => {
-    console.log(isExpected);
+mrt(opts, 'https://www.google.com', 'https://github.com').then(isExpected => {
+    console.log(isExpected)
     //=> false
-    //    See ./tests/updated/diffs/www.google.com_VS_github.com_homepage.json
+    //   See ./tests/updated/diffs/www.google.com_VS_github.com_homepage.json
     //   Check console for differences between google and github metadata keys (example only)
 });
 ```
@@ -78,7 +49,7 @@ project_folder
         |_actual/
         |   *.json
         |_diffs/
-        |   *.json
+        |   *.txt
         |_expected/
             *.json
 ```
@@ -101,6 +72,7 @@ Scrapes given URL/s for HTML metadata and performs a regression test
 
 ## CLI
 ```console
+$   npm install metadata-regression-testing -g
 $   mrt --help
 
     Usage
@@ -122,6 +94,35 @@ $   mrt --help
         $ mrt https://qa-mrtoverflow.com https://dev-mrtoverflow.com --keys-only
 ```
 
+### Console examples
+<img align="left" src="./media/diffinconsole.png" alt="MRT diff output in console" width="47%"/>
+<img align="right" src="./media/diffandsuccessinconsole.png" alt="MRT diff and success output in console" width="47%"/>
+
+![First Run Terminal Output](https://raw.githubusercontent.com/dimitriharding/metadata-regression-testing/master/media/first_run_mrt.png)
+
+## Reporter
+
+Diffboard is a HTML report that helps to visualize tests so issues can be easily spotted outside of the console. 
+
+### Features
+<img align="right" src="./media/diffboard.png" alt="Diffboard Report for MRT" width="50%" />
+
+* Diff highlighting
+* Hide/Show unwanted tabs for falied tests
+* Different view types for failed tests
+* Filters/Search to only display the tests you want
+* Offline viewing
+
+This reporter is best used in the `after` hook of the test runner. The path to the reporter will be printed in the console. 
+
+### Available Options
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| [options] | <code>Object</code> |  |  |
+| [options.diffboardTitle] | <code>String</code> | <code>&#x27;Diffboard&#x27;</code> | The name that will be displayed in the header |
+| [options.path] | <code>String</code> | <code>MRT defualt path</code> | Dir of results created by MRT |
+| [options.filename] | <code>String</code> | <code>&#x27;diffboard&#x27;</code> | Filename of saved report </br> <em>Applies to the generated html and json files.</em> |
+
 ## Tests
 
 `npm test`
@@ -134,10 +135,5 @@ It automatically creates an expected JSON on the first run of any URL. These JSO
 
 Review [html-metadata](https://github.com/wikimedia/html-metadata) to see what is being scrapped. 
 
-## Good to Have
-- [x] CLI feature
-- [x] Option overrides (e.g. change default file paths)
-- [x] Support multiple domains
-
-### First Run Quick Look
-![First Run Terminal Output](https://raw.githubusercontent.com/dimitriharding/metadata-regression-testing/master/media/first_run_mrt.png)
+## License
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fdimitriharding%2Fmetadata-regression-testing.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fdimitriharding%2Fmetadata-regression-testing?ref=badge_large)
