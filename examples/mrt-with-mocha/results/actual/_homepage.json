@@ -1,0 +1,27 @@
+{
+	"general": {
+		"icons": [
+			{
+				"href": "/images/branding/product/ico/googleg_lodp.ico"
+			}
+		],
+		"description": "Search the world's information, including webpages, images, videos and more. Google has many special features to help you find exactly what you're looking for.",
+		"robots": "noodp",
+		"title": "Google",
+		"lang": "en"
+	},
+	"schemaOrg": {
+		"items": [
+			{
+				"properties": {
+					"image": [
+						"/images/branding/googleg/1x/googleg_standard_color_128dp.png"
+					]
+				},
+				"type": [
+					"http://schema.org/WebPage"
+				]
+			}
+		]
+	}
+}

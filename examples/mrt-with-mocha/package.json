@@ -1,0 +1,22 @@
+{
+  "name": "mrt-with-mocha",
+  "version": "0.0.0",
+  "description": "Example of using metadata-regression-testing with the mocha test runner",
+  "main": "test",
+  "scripts": {
+    "test": "mocha"
+  },
+  "keywords": [
+    "mocha",
+    "html",
+    "testing",
+    "mrt",
+    "metadata-regression-testing"
+  ],
+  "author": "“Dimitri Harding",
+  "license": "ISC",
+  "dependencies": {
+    "metadata-regression-testing": "^1.2.0",
+    "mocha": "^5.2.0"
+  }
+}

@@ -1,0 +1,60 @@
+ {
+-  schemaOrg: {
+-    items: [
+-      {
+-        properties: {
+-          image: [
+-            "/images/branding/googleg/1x/googleg_standard_color_128dp.png"
+-          ]
+-        }
+-        type: [
+-          "http://schema.org/WebPage"
+-        ]
+-      }
+-    ]
+-  }
++  openGraph: {
++    app_id: "1401488693436528"
++    url: "https://github.com"
++    site_name: "GitHub"
++    title: "Build software better, together"
++    description: "GitHub is where people build software. More than 28 million people use GitHub to discover, fork, and contribute to over 85 million projects."
++    image: [
++      {
++        url: "https://assets-cdn.github.com/images/modules/open_graph/github-logo.png"
++        type: "image/png"
++        width: "1200"
++        height: "1200"
++      }
++      {
++        url: "https://assets-cdn.github.com/images/modules/open_graph/github-mark.png"
++        type: "image/png"
++        width: "1200"
++        height: "620"
++      }
++      {
++        url: "https://assets-cdn.github.com/images/modules/open_graph/github-octocat.png"
++        type: "image/png"
++        width: "1200"
++        height: "620"
++      }
++    ]
++  }
+   general: {
+-    robots: "noodp"
++    canonical: "https://github.com/"
+     icons: [
+-      {
+-        href: "/images/branding/product/ico/googleg_lodp.ico"
+-      }
++      {
++        href: "https://assets-cdn.github.com/favicon.ico"
++        type: "image/x-icon"
++      }
+     ]
+-    description: "Search the world's information, including webpages, images, videos and more. Google has many special features to help you find exactly what you're looking for."
++    description: "GitHub brings together the world’s largest community of developers to discover, share, and build better software. From open source projects to private team repositories, we’re your all-in-one platform for collaborative development."
+-    title: "Google"
++    title: "The world’s leading software development platform · GitHub"
+   }
+ }
