@@ -5,7 +5,8 @@ media/
 coverage/
 
 #nyc
-nyc_output/ 
+nyc_output/
+.nyc_output
 
 #diffboard
 diffboard/gulpfile.js

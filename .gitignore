@@ -65,6 +65,7 @@ coverage/
 
 #nyc
 nyc_output
+.nyc_output
 
 #vscode
 .vscode
