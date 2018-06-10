@@ -15,7 +15,7 @@ html
             .container-full
               .row
                 .col.s12
-                  a().brand-logo.flow-text.white-text Metadata Regression Testing
+                  a(href='https://github.com/dimitriharding/metadata-regression-testing' target='_blank').brand-logo.flow-text.white-text Metadata Regression Testing
                   p.center.flow-text.text-white-light #{diffBoardName}
     main
       .container
@@ -82,11 +82,14 @@ html
                         tbody
                           tr
                             td.reference.expected
-                              code.prettyprint.lang-json= JSON.stringify(val.expectedJson,null,2)
+                              div.table-data 
+                                code.prettyprint.lang-json= JSON.stringify(val.expectedJson,null,2)
                             td.test.actual
-                              code.prettyprint.lang-json= JSON.stringify(val.actualJson,null,2)
+                              div.table-data 
+                                code.prettyprint.lang-json= JSON.stringify(val.actualJson,null,2)
                             td.result.diff
-                              pre.result()= val.diffText
+                              div.table-data
+                                pre.result()= val.diffText
                     else
                       table.no-diff
                         thead
@@ -96,9 +99,11 @@ html
                         tbody
                           tr
                             td.reference.expected
-                              code.prettyprint.lang-json= JSON.stringify(val.expectedJson,null,2)
+                              div.table-data
+                                code.prettyprint.lang-json= JSON.stringify(val.expectedJson,null,2)
                             td.test.actual
-                              code.prettyprint.lang-json= JSON.stringify(val.actualJson,null,2)
+                              div.table-data
+                                code.prettyprint.lang-json= JSON.stringify(val.actualJson,null,2)
     footer.page-footer.z-depth-3.mrt-purple-deep
       a.container
         .row

@@ -36,6 +36,8 @@ td {
   text-align: left;
   overflow: auto;
   white-space: pre;
+  padding: 0;
+  margin: 0;
 }
 del {
   text-decoration: none;
@@ -206,6 +208,13 @@ main .container {
   max-width: 1280px;
   width: 95%;
 }
+pre.result {
+  padding-left:5px;
+}
+.table-data {
+  overflow: auto;
+}
+
 @media only screen and (min-width: 601px) {
   main .container {
     width: 95%;
