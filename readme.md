@@ -12,7 +12,10 @@
 
 
 Useful for when you want to ensure that metadata remains the same for a certain page. 
-
+>HTML metadata is important and this tool aims to help ensure that existing metadata 
+remains the same throughout different scenarios where its data can be removed or edited. 
+Since viewing page source can be such an eye swore and there is the chance of you missing the 
+small details. MRT (metadata-regression-testing) will scrape your metadata and show the difference if any is found overtime. 
 
 ## Install
 
