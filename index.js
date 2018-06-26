@@ -31,11 +31,15 @@ const createFilenameFromUrl = url => {
 	return filename;
 };
 
+const isExisting = path => {
+	return fs.existsSync(path);
+};
+
 const compareMetaData = (testMetadata, referenceMetadata, diffPath) => {
 	const diffResults = jsonDiffString(testMetadata, referenceMetadata, {}, options);
 	if (diffResults === '') {
 		// Remove existing diff
-		if (fs.existsSync(diffPath)) {
+		if (isExisting(diffPath)) {
 			fs.removeSync(diffPath);
 		}
 		log.info('SUCCESS', `Regression Testing was successful for: ${log.link(diffPath.replace('/diffs/', '/actual/'))}`);
@@ -64,6 +68,11 @@ const getMetadatDiff = (expected, actual) => {
 	return compareMetaData(actualJSON, expectedJSON, diffPath);
 };
 
+const createMetadataFile = (path, metadata) => {
+	const formatedData = JSON.stringify(metadata, null, '\t');
+	fs.outputFileSync(path, formatedData);
+};
+
 const generateMetaFiles = fetchedMetadata => {
 	let expectedMetaPath = '';
 	let actualMetaPath = '';
@@ -82,8 +91,8 @@ const generateMetaFiles = fetchedMetadata => {
 		actualMetaPath = `${options.path}/actual/${filename}.json`;
 
 		// Create expected and actual metadata file with data
-		fs.outputFileSync(expectedMetaPath, JSON.stringify(fetchedMetadata[REF_URL], null, '\t'));
-		fs.outputFileSync(actualMetaPath, JSON.stringify(fetchedMetadata[TEST_URL], null, '\t'));
+		createMetadataFile(expectedMetaPath, fetchedMetadata[REF_URL]);
+		createMetadataFile(actualMetaPath, fetchedMetadata[TEST_URL]);
 		return getMetadatDiff(expectedMetaPath, actualMetaPath);
 	}
 
@@ -91,10 +100,10 @@ const generateMetaFiles = fetchedMetadata => {
 	actualMetaPath = `${options.path}/actual/${filename}.json`;
 
 	// Create actual metadata file with data
-	fs.outputFileSync(actualMetaPath, JSON.stringify(fetchedMetadata[TEST_URL], null, '\t'));
+	createMetadataFile(actualMetaPath, fetchedMetadata[TEST_URL]);
 
 	// Create new expected metadata json file if none exists
-	if (!fs.existsSync(expectedMetaPath)) {
+	if (!isExisting(expectedMetaPath)) {
 		log.off('MRT', 'Expected metadata JSON does NOT exist.');
 		log.off('MRT', 'Creating Expected metadata JSON from Result: ' + log.link(expectedMetaPath));
 
